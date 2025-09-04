@@ -1,28 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from '../../redux/auth/selectors';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../../redux/auth/selectors";
 import {
   selectTransactions,
   selectTotalBalance,
   selectTransactionCategories,
-} from '../../redux/transactions/selectors';
-import { deleteTransaction, getTransactions } from '../../redux/transactions/operations';
+} from "../../redux/transactions/selectors";
+import {
+  deleteTransaction,
+  getTransactions,
+} from "../../redux/transactions/operations";
 
-import Header from '../../components/Header/Header';
-import Navigation from '../../components/Navigation/Navigation';
-import Currency from '../../components/Currency/Currency';
-import AddTransactionModal from '../../components/TransactionModal/AddTransactionModal';
-import EditTransactionModal from '../../components/TransactionModal/EditTransactionModal';
-import EmptyTransactions from '../../components/EmptyStates/EmptyTransactions';
+import Header from "../../components/Header/Header";
+import Navigation from "../../components/Navigation/Navigation";
+import Currency from "../../components/Currency/Currency";
+import StatisticsDashboard from "../../components/StatisticsDashboard/StatisticsDashboard";
+import AddTransactionModal from "../../components/TransactionModal/AddTransactionModal";
+import EditTransactionModal from "../../components/TransactionModal/EditTransactionModal";
+import EmptyTransactions from "../../components/EmptyStates/EmptyTransactions";
 
-import styles from './DashboardPage.module.css';
-import ellipse14 from '../../assets/Ellipse14.svg';
-import ellipse16 from '../../assets/Ellipse16.svg';
-import ellipse18 from '../../assets/Ellipse18.svg';
-import ellipse19 from '../../assets/Ellipse19.svg';
-import ellipse20 from '../../assets/Ellipse20.svg';
+import styles from "./DashboardPage.module.css";
+import ellipse14 from "../../assets/Ellipse14.svg";
+import ellipse16 from "../../assets/Ellipse16.svg";
+import ellipse18 from "../../assets/Ellipse18.svg";
+import ellipse19 from "../../assets/Ellipse19.svg";
+import ellipse20 from "../../assets/Ellipse20.svg";
+import homeIcon from "../../assets/home.svg";
+import statisticsIcon from "../../assets/statistic.svg";
+import currencyIcon from "../../assets/currency.svg";
 
 const DashboardPage = () => {
+  const [activeView, setActiveView] = useState("dashboard");
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const transactions = useSelector(selectTransactions);
@@ -36,13 +44,13 @@ const DashboardPage = () => {
 
   // Category ID -> Name
   const getCategoryName = (categoryId) => {
-    if (!categories || !categoryId) return 'Unknown';
+    if (!categories || !categoryId) return "Unknown";
     const category = categories.find((cat) => cat.id === categoryId);
-    return category ? category.name : 'Unknown';
+    return category ? category.name : "Unknown";
   };
 
   // Debug
-  console.log('Dashboard Debug Info:', {
+  console.log("Dashboard Debug Info:", {
     user,
     transactionsCount: transactions?.length || 0,
     totalBalance,
@@ -60,12 +68,15 @@ const DashboardPage = () => {
   };
 
   const handleDeleteClick = async (transactionId) => {
-    if (window.confirm('Bu işlemi silmek istediğinizden emin misiniz?')) {
+    if (window.confirm("Bu işlemi silmek istediğinizden emin misiniz?")) {
       try {
         await dispatch(deleteTransaction(transactionId)).unwrap();
       } catch (error) {
-        console.error('Transaction silinirken hata:', error);
-        alert('Transaction silinirken hata oluştu: ' + (error.message || 'Bilinmeyen hata'));
+        console.error("Transaction silinirken hata:", error);
+        alert(
+          "Transaction silinirken hata oluştu: " +
+            (error.message || "Bilinmeyen hata")
+        );
       }
     }
   };
@@ -95,97 +106,137 @@ const DashboardPage = () => {
           {/* Currency */}
           <Currency />
         </aside>
-
         {/* Main Content */}
         <main className={styles.mainContent}>
-          <div className={styles.transactionsContainer}>
-            <div className={styles.transactionsTable}>
-              <div className={styles.tableHeader}>
-                <span>Date</span>
-                <span>Type</span>
-                <span>Category</span>
-                <span>Comment</span>
-                <span>Sum</span>
-                <span>Actions</span>
-              </div>
-
-              {transactions && transactions.length > 0 ? (
-                transactions.map((transaction) => (
-                  <div key={transaction.id} className={styles.tableRow}>
-                    <span className={styles.date}>{transaction.transactionDate}</span>
-
-                    <span
-                      className={`${styles.type} ${
-                        transaction.type === 'INCOME' ? styles.income : styles.expense
-                      }`}
-                    >
-                      {transaction.type === 'INCOME' ? '+' : '-'}
-                    </span>
-
-                    <span className={styles.category}>
-                      {getCategoryName(transaction.categoryId)}
-                    </span>
-
-                    <span className={styles.comment}>{transaction.comment}</span>
-
-                    <span
-                      className={`${styles.sum} ${
-                        transaction.amount >= 0 ? styles.positive : styles.negative
-                      }`}
-                    >
-                      {Math.abs(transaction.amount)}
-                    </span>
-
-                    <div className={styles.actions}>
-                      <button
-                        className={styles.editButton}
-                        onClick={() => handleEditClick(transaction)}
-                        aria-label="Edit transaction"
-                      >
-                        <svg viewBox="0 0 24 24" fill="none" className={styles.editIcon}>
-                          <path
-                            d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </button>
-
-                      <button
-                        className={styles.deleteButton}
-                        onClick={() => handleDeleteClick(transaction.id)}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className={styles.tableEmptyWrap}>
-                  <EmptyTransactions onAdd={handleAddClick} />
-                </div>
-              )}
-            </div>
+          <div className={styles.mobileNav}>
+            <button
+              onClick={() => setActiveView("dashboard")}
+              className={activeView === "dashboard" ? styles.active : ""}
+            >
+              <img src={homeIcon} alt="Dashboard" />
+            </button>
+            <button
+              onClick={() => setActiveView("statistics")}
+              className={activeView === "statistics" ? styles.active : ""}
+            >
+              <img src={statisticsIcon} alt="Statistics" />
+            </button>
+            <button
+              onClick={() => setActiveView("currency")}
+              className={activeView === "currency" ? styles.active : ""}
+            >
+              <img src={currencyIcon} alt="Currency" />
+            </button>
           </div>
 
-          {/* Floating Action Button */}
-          <button className={styles.fab} onClick={handleAddClick}>
-            <span className={styles.fabIcon}>+</span>
-          </button>
+          {activeView === "dashboard" && (
+            <>
+              <div className={styles.transactionsContainer}>
+                <div className={styles.transactionsTable}>
+                  <div className={styles.tableHeader}>
+                    <span>Date</span>
+                    <span>Type</span>
+                    <span>Category</span>
+                    <span>Comment</span>
+                    <span>Sum</span>
+                    <span>Actions</span>
+                  </div>
+
+                  {transactions && transactions.length > 0 ? (
+                    transactions.map((transaction) => (
+                      <div key={transaction.id} className={styles.tableRow}>
+                        <span className={styles.date}>
+                          {transaction.transactionDate}
+                        </span>
+
+                        <span
+                          className={`${styles.type} ${
+                            transaction.type === "INCOME"
+                              ? styles.income
+                              : styles.expense
+                          }`}
+                        >
+                          {transaction.type === "INCOME" ? "+" : "-"}
+                        </span>
+
+                        <span className={styles.category}>
+                          {getCategoryName(transaction.categoryId)}
+                        </span>
+
+                        <span className={styles.comment}>
+                          {transaction.comment}
+                        </span>
+
+                        <span
+                          className={`${styles.sum} ${
+                            transaction.amount >= 0
+                              ? styles.positive
+                              : styles.negative
+                          }`}
+                        >
+                          {Math.abs(transaction.amount)}
+                        </span>
+
+                        <div className={styles.actions}>
+                          <button
+                            className={styles.editButton}
+                            onClick={() => handleEditClick(transaction)}
+                            aria-label="Edit transaction"
+                          >
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              className={styles.editIcon}
+                            >
+                              <path
+                                d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                              <path
+                                d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                          </button>
+
+                          <button
+                            className={styles.deleteButton}
+                            onClick={() => handleDeleteClick(transaction.id)}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className={styles.tableEmptyWrap}>
+                      <EmptyTransactions onAdd={handleAddClick} />
+                    </div>
+                  )}
+                </div>
+              </div>
+              <button className={styles.fab} onClick={handleAddClick}>
+                <span className={styles.fabIcon}>+</span>
+              </button>
+            </>
+          )}
+
+          {activeView === "statistics" && <StatisticsDashboard />}
+          {activeView === "currency" && <Currency />}
         </main>
       </div>
 
       {/* Modals */}
-      <AddTransactionModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} />
+      <AddTransactionModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+      />
 
       <EditTransactionModal
         isOpen={isEditModalOpen}
