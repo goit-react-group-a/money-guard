@@ -93,20 +93,28 @@ const DashboardPage = () => {
       <Header />
 
       <div className={styles.mainContainer}>
-        {/* Left Sidebar */}
-        <aside className={styles.sidebar}>
-          <Navigation />
+        {/* Tablet için üst kısım - Navigation, Balance ve Currency */}
+        <div className={styles.topSection}>
+          <aside className={styles.sidebar}>
+            {/* Sol taraf - Navigation ve Balance */}
+            <div className={styles.leftSidebarContent}>
+              <Navigation />
 
-          {/* Balance */}
-          <div className={styles.balanceSection}>
-            <h3 className={styles.balanceTitle}>YOUR BALANCE</h3>
-            <div className={styles.balanceAmount}>₴ {totalBalance}</div>
-          </div>
+              {/* Balance */}
+              <div className={styles.balanceSection}>
+                <h3 className={styles.balanceTitle}>YOUR BALANCE</h3>
+                <div className={styles.balanceAmount}>₴ {totalBalance}</div>
+              </div>
+            </div>
 
-          {/* Currency */}
-          <Currency />
-        </aside>
-        {/* Main Content */}
+            {/* Sağ taraf - Currency */}
+            <div className={styles.currencySection}>
+              <Currency />
+            </div>
+          </aside>
+        </div>
+
+        {/* Alt kısım - Transaction Table */}
         <main className={styles.mainContent}>
           <div className={styles.mobileNav}>
             <button
@@ -142,93 +150,142 @@ const DashboardPage = () => {
                     <span>Actions</span>
                   </div>
 
-                  {transactions && transactions.length > 0 ? (
-                    transactions.map((transaction) => (
-                      <div key={transaction.id} className={styles.tableRow}>
-                        <span className={styles.date}>
-                          {transaction.transactionDate}
-                        </span>
+              {transactions && transactions.length > 0 ? (
+                transactions.map((transaction) => (
+                  <div key={transaction.id} className={styles.tableRow}>
+                    {/* Desktop/Tablet Layout */}
+                    <span className={styles.date}>{transaction.transactionDate}</span>
+                    <span
+                      className={`${styles.type} ${
+                        transaction.type === 'INCOME' ? styles.income : styles.expense
+                      }`}
+                    >
+                      {transaction.type === 'INCOME' ? '+' : '-'}
+                    </span>
+                    <span className={styles.category}>
+                      {getCategoryName(transaction.categoryId)}
+                    </span>
+                    <span className={styles.comment}>{transaction.comment}</span>
+                    <span
+                      className={`${styles.sum} ${
+                        transaction.amount >= 0 ? styles.positive : styles.negative
+                      }`}
+                    >
+                      {Math.abs(transaction.amount)}
+                    </span>
+                    <div className={styles.actions}>
+                      <button
+                        className={styles.editButton}
+                        onClick={() => handleEditClick(transaction)}
+                        aria-label="Edit transaction"
+                      >
+                        <svg viewBox="0 0 24 24" fill="none" className={styles.editIcon}>
+                          <path
+                            d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </button>
+                      <button
+                        className={styles.deleteButton}
+                        onClick={() => handleDeleteClick(transaction.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
 
+                    {/* Mobile Card Layout - Sadece mobilde görünür */}
+                    <div className={styles.mobileCard}>
+                      <div className={styles.transactionCardRow}>
+                        <span className={styles.transactionCardLabel}>Date</span>
+                        <span className={styles.transactionCardValue}>{transaction.transactionDate}</span>
+                      </div>
+                      <div className={styles.transactionCardRow}>
+                        <span className={styles.transactionCardLabel}>Type</span>
                         <span
-                          className={`${styles.type} ${
-                            transaction.type === "INCOME"
-                              ? styles.income
-                              : styles.expense
+                          className={`${styles.transactionCardValue} ${styles.type} ${
+                            transaction.type === 'INCOME' ? styles.income : styles.expense
                           }`}
                         >
-                          {transaction.type === "INCOME" ? "+" : "-"}
+                          {transaction.type === 'INCOME' ? '+' : '-'}
                         </span>
-
-                        <span className={styles.category}>
+                      </div>
+                      <div className={styles.transactionCardRow}>
+                        <span className={styles.transactionCardLabel}>Category</span>
+                        <span className={styles.transactionCardValue}>
                           {getCategoryName(transaction.categoryId)}
                         </span>
-
-                        <span className={styles.comment}>
-                          {transaction.comment}
-                        </span>
-
+                      </div>
+                      <div className={styles.transactionCardRow}>
+                        <span className={styles.transactionCardLabel}>Comment</span>
+                        <span className={styles.transactionCardValue}>{transaction.comment}</span>
+                      </div>
+                      <div className={styles.transactionCardRow}>
+                        <span className={styles.transactionCardLabel}>Sum</span>
                         <span
-                          className={`${styles.sum} ${
-                            transaction.amount >= 0
-                              ? styles.positive
-                              : styles.negative
+                          className={`${styles.transactionCardValue} ${styles.sum} ${
+                            transaction.amount >= 0 ? styles.positive : styles.negative
                           }`}
                         >
-                          {Math.abs(transaction.amount)}
+                          ₴{Math.abs(transaction.amount)}
                         </span>
-
-                        <div className={styles.actions}>
-                          <button
-                            className={styles.editButton}
-                            onClick={() => handleEditClick(transaction)}
-                            aria-label="Edit transaction"
-                          >
-                            <svg
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              className={styles.editIcon}
-                            >
-                              <path
-                                d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <path
-                                d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-                          </button>
-
-                          <button
-                            className={styles.deleteButton}
-                            onClick={() => handleDeleteClick(transaction.id)}
-                          >
-                            Delete
-                          </button>
-                        </div>
                       </div>
-                    ))
-                  ) : (
-                    <div className={styles.tableEmptyWrap}>
-                      <EmptyTransactions onAdd={handleAddClick} />
+                      <div className={styles.mobileActions}>
+                        <button
+                          className={styles.mobileDeleteButton}
+                          onClick={() => handleDeleteClick(transaction.id)}
+                        >
+                          Delete
+                        </button>
+                        <button
+                          className={styles.mobileEditButton}
+                          onClick={() => handleEditClick(transaction)}
+                          aria-label="Edit transaction"
+                        >
+                          <svg viewBox="0 0 24 24" fill="none" className={styles.editIcon}>
+                            <path
+                              d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                          Edit
+                        </button>
+                      </div>
                     </div>
-                  )}
+                  </div>
+                ))
+              ) : (
+                <div className={styles.tableEmptyWrap}>
+                  <EmptyTransactions onAdd={handleAddClick} />
                 </div>
-              </div>
-              <button className={styles.fab} onClick={handleAddClick}>
-                <span className={styles.fabIcon}>+</span>
-              </button>
-            </>
-          )}
+              )}
+            </div>
+          </div>
 
-          {activeView === "statistics" && <StatisticsDashboard />}
-          {activeView === "currency" && <Currency />}
+          {/* Floating Action Button */}
+          <button className={styles.fab} onClick={handleAddClick}>
+            <span className={styles.fabIcon}>+</span>
+          </button>
         </main>
       </div>
 
