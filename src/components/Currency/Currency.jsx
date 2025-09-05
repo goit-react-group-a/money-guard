@@ -7,7 +7,7 @@ import {
   selectCurrencyError,
 } from "../../redux/monobank/selectors";
 import styles from "./Currency.module.css";
-
+import statsStyles from '../../pages/StatisticsPage/StatisticsPage.module.css';
 const Currency = () => {
   const dispatch = useDispatch();
   const currencies = useSelector(selectCurrencies) || [];
@@ -25,10 +25,10 @@ const Currency = () => {
   const VIEW_W = 431;
   const VIEW_H = 281;
   const CHART_H = 200; // dikey çizim alanı
-  const TOP_PAD = 28;  // etiketler için üst boşluk
+  const TOP_PAD = 28; // etiketler için üst boşluk
   const X_FACTOR = 4.31;
 
-  // Güncel kurlar (boşsa fallBack)
+  // Güncel kurlar (boşsa fallback)
   const getValues = () => {
     const find = (code) =>
       parseFloat(
@@ -105,7 +105,7 @@ const Currency = () => {
 
   if (loading) {
     return (
-      <div className={styles.currencySection}>
+      <div className={`${styles.currencySection} ${statsStyles.statisticsBox}`}>
         <div className={styles.loading}>Yükleniyor...</div>
       </div>
     );
@@ -113,38 +113,38 @@ const Currency = () => {
 
   if (error) {
     return (
-      <div className={styles.currencySection}>
+      <div className={`${styles.currencySection} ${statsStyles.statisticsBox}`}>
         <div className={styles.error}>{error}</div>
       </div>
     );
   }
 
   return (
-    <div className={styles.currencySection}>
+    <div className={`${styles.currencySection} ${statsStyles.statisticsBox}`}>
       {/* Tablo */}
       <div className={styles.currencyTable}>
-  <div className={styles.currencyHeader}>
-    <span className={styles.hCurrency}>Currency</span>
-    <span className={styles.hCol}>Purchase</span>
-    <span className={styles.hCol}>Sale</span>
-  </div>
+        <div className={styles.currencyHeader}>
+          <span className={styles.hCurrency}>Currency</span>
+          <span className={styles.hCol}>Purchase</span>
+          <span className={styles.hCol}>Sale</span>
+        </div>
 
-  {(currencies || []).map((c, i) => {
-    const purchase = Number(c.purchase ?? 0);
-    const sale = Number(c.sale ?? 0);
-    return (
-      <div key={i} className={styles.currencyRow}>
-        <span className={styles.cellCurrency}>{c.currency}</span>
-        <span className={styles.cellCenter}>
-          {isFinite(purchase) ? purchase.toFixed(2) : "-"}
-        </span>
-        <span className={styles.cellCenter}>
-          {isFinite(sale) ? sale.toFixed(2) : "-"}
-        </span>
+        {(currencies || []).map((c, i) => {
+          const purchase = Number(c.purchase ?? 0);
+          const sale = Number(c.sale ?? 0);
+          return (
+            <div key={i} className={styles.currencyRow}>
+              <span className={styles.cellCurrency}>{c.currency}</span>
+              <span className={styles.cellCenter}>
+                {isFinite(purchase) ? purchase.toFixed(2) : "-"}
+              </span>
+              <span className={styles.cellCenter}>
+                {isFinite(sale) ? sale.toFixed(2) : "-"}
+              </span>
+            </div>
+          );
+        })}
       </div>
-    );
-  })}
-</div>
 
       {/* Grafik */}
       <div className={styles.graphContainer}>
@@ -184,7 +184,7 @@ const Currency = () => {
             />
           )}
 
-          {/* Noktalar & etiketler (akıllı hizalama) */}
+          {/* Noktalar & etiketler */}
           {pts.map((point, i) => {
             const cx = xScale(point.x);
             const cy = yScale(point.y);

@@ -197,6 +197,10 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  
+  .balanceSection {
+  display:none;
+}
   .mainContainer {
     flex-direction: column;
   }
@@ -204,17 +208,16 @@
   .sidebar {
     width: 100%;
     border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 0 solid rgba(255, 255, 255, 0);
     padding: 1rem;
+    background: none;
   }
 
   .mainContent {
     padding: 1rem;
   }
 
-  .balanceAmount {
-    font-size: 2rem;
-  }
+  
 
   .pageTitle {
     font-size: 2rem;
@@ -227,4 +230,5 @@
   .content h1 {
     font-size: 1.5rem;
   }
+  
 }

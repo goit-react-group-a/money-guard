@@ -17,7 +17,8 @@ const StatisticsDashboard = () => {
   const [selectedMonth, setSelectedMonth] = useState("September");
   const [selectedYear, setSelectedYear] = useState("2025");
 
-  const months = [
+  const months = useMemo(
+  () => [
     "January",
     "February",
     "March",
@@ -30,8 +31,11 @@ const StatisticsDashboard = () => {
     "October",
     "November",
     "December",
-  ];
-  const years = ["2020", "2021", "2022", "2023", "2024", "2025"];
+  ],
+  []
+);
+
+const years = useMemo(() => ["2020", "2021", "2022", "2023", "2024", "2025"], []);
 
   // Kategori ID'lerini kategori adlarına eşle
   const getCategoryName = (categoryId) => {
