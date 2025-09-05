@@ -16,6 +16,7 @@
 
 .monthFilter,
 .yearFilter {
+  text-align: center;
   width: 100%;
   background: #4a56e21a;
   border: 1px solid rgba(251, 251, 251, 0.546);
@@ -29,6 +30,7 @@
   height: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
+  appearance: none;
 }
 
 .monthFilter:hover,
@@ -46,10 +48,12 @@
   box-shadow: 0 0 0 3px rgba(74, 86, 226, 0.3);
 }
 
+
 .monthFilter option,
 .yearFilter option {
-  background: #1a1a1a;
+  background: #2c1a70;
   color: white;
+  width: 100%;
 }
 
 /* Main Content Layout */
@@ -88,7 +92,7 @@
 
 .balanceText {
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 00;
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
@@ -145,6 +149,7 @@
   font-weight: 600;
   font-size: 14px;
   color: #e2e8f0;
+  
 }
 
 .categoryAmount {
@@ -279,8 +284,15 @@
   margin: 0;
 }
 
-/* Responsive Design */
+/*Tablet Responsive Design */
 @media (max-width: 1280px) {
+   .tableHeader,
+  .tableRow {
+    grid-template-columns: 1fr 1fr 1fr ;
+    gap: 10px;
+    padding: 10px;
+    text-align: center;
+  }
   .dashboardContent {
     flex-direction: column;
     gap: 30px;
@@ -300,17 +312,17 @@
     width: 100%;
     max-height: none;
   }
-}
 
+  
+}
+/*Mobile Responsive Design */
 @media (max-width: 768px) {
-  .filters {
-    flex-direction: column;
-    gap: 15px;
-  }
+  
 
   .chartContainer {
     width: 250px;
     height: 250px;
+    
   }
 
   .balanceText {
@@ -322,19 +334,16 @@
     min-width: 100px;
     height: 45px;
     padding: 12px 16px;
-    font-size: 14px;
+    font-size: 15px;
   }
-}
-
-/* Responsive for transaction table */
-@media (max-width: 768px) {
   .tableHeader,
   .tableRow {
-    grid-template-columns: 1fr 1fr 1.5fr 1fr;
+    grid-template-columns: 1fr 1fr ;
     gap: 10px;
     padding: 10px;
+    text-align: center;
   }
-
+  .tableHeader 
   .tableHeader span,
   .tableRow span {
     font-size: 12px;
@@ -343,4 +352,41 @@
   .comment {
     font-size: 11px;
   }
+   .balanceText {
+    font-size: 1.2rem;
+  }
+
+  .dashboardHeader {
+  margin-bottom: 20px;
 }
+
+ .filters {
+    flex-direction: column; 
+    gap: 15px;
+  }
+
+  .monthFilter,
+  .yearFilter {
+    width: 100%;           
+    min-width: unset;      
+    box-sizing: border-box;
+  }
+  .comment {
+    display: none; 
+  }
+  .tableRow span {
+  color: white;
+  font-size: 14px;
+  width: 120%;
+  text-align: left ;
+
+}
+
+  .amount.expense  {
+    text-align: center ;
+  }
+
+  
+  
+}
+
