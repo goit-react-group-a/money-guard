@@ -127,14 +127,14 @@
 
 .currencyHeader {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   padding: 1rem;
   background: rgba(255, 255, 255, 0.08);
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #a0a0a0;
+  color: #1b1414;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -197,6 +197,10 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  
+  .balanceSection {
+  display:none;
+}
   .mainContainer {
     flex-direction: column;
   }
@@ -204,17 +208,17 @@
   .sidebar {
     width: 100%;
     border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 0 solid rgba(255, 255, 255, 0);
     padding: 1rem;
+    background: none;
   }
 
   .mainContent {
     padding: 1rem;
+    padding: 0;
   }
 
-  .balanceAmount {
-    font-size: 2rem;
-  }
+  
 
   .pageTitle {
     font-size: 2rem;
@@ -226,5 +230,61 @@
 
   .content h1 {
     font-size: 1.5rem;
+
   }
+
+
+  
+}
+
+@media (max-width: 1024px) { 
+  .sidebar {
+    background: none;
+    border: none;
+  }
+
+  .currencySection {
+  margin-top: 60px;
+  height: 430px;
+  display: flex;
+  flex-direction: column;
+}
+
+.currencyTable {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.currencyHeader {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #1b1414;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.currencyRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.875rem;
+  color: white;
+  background: none;
+}
+
+.currencyRow:last-child {
+  border-bottom: none;
+}
+
+
 }

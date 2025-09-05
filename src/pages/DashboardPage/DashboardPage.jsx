@@ -113,7 +113,6 @@ const DashboardPage = () => {
                 <span>Category</span>
                 <span>Comment</span>
                 <span>Sum</span>
-                <span>Actions</span>
               </div>
 
               {transactions && transactions.length > 0 ? (
