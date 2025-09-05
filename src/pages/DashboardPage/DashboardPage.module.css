@@ -16,41 +16,39 @@
 }
 
 .ellipse16 {
-    position: absolute;
-    bottom: -300px;
-    left: 400px;
-    width: 1693px;
-    height: 1701px;
-    z-index: 0;
+  position: absolute;
+  bottom: -300px;
+  left: 400px;
+  width: 1693px;
+  height: 1701px;
+  z-index: 0;
 }
 
 .ellipse18 {
-    position: absolute;
-    top: 1000px;
-    left: 1500px;
-    transform: translate(-50%, -50%);
-    width: 1100px;
-    height: 933px;
-    z-index: 0;
+  position: absolute;
+  top: 1000px;
+  left: 1500px;
+  transform: translate(-50%, -50%);
+  width: 1100px;
+  height: 933px;
+  z-index: 0;
 }
 
 .ellipse19 {
-    position: absolute;
-    right: 400px;
-    width: 100vw;
-    height: 100vh;
-    z-index: 0;
-  
+  position: absolute;
+  right: 400px;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
 }
 .ellipse20 {
-    position: absolute;
-    top: 700px;
-    left: 100px;
-    transform: translate(-50%, -50%);
-    width: 100vw;
-    height: 500px;
-    z-index: 0;
-  
+  position: absolute;
+  top: 700px;
+  left: 100px;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 500px;
+  z-index: 0;
 }
 
 .mainContainer {
@@ -107,7 +105,6 @@
   display: flex;
   flex-direction: column;
 }
-
 
 .currencyTable {
   background: rgba(255, 255, 255, 0.05); /* Tablo için hafif background */
@@ -167,13 +164,17 @@
 }
 
 .graphLine::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -20px;
   left: 0;
   right: 0;
   height: 40px;
-  background: linear-gradient(180deg, rgba(245, 158, 11, 0.2) 0%, transparent 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(245, 158, 11, 0.2) 0%,
+    transparent 100%
+  );
 }
 
 .graphPoints {
@@ -347,13 +348,18 @@
 }
 
 .deleteButton::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
   transition: left 0.8s ease;
 }
 
@@ -419,17 +425,65 @@
   height: 100%;
 }
 
+.mobileNav {
+  display: none;
+  margin-bottom: 1rem;
+}
+
+.mobileNav button {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  color: #a0a0a0;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  flex: 1;
+  justify-content: center;
+}
+
+.mobileNav button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.mobileNav button.active {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+}
+
+.mobileNav button img {
+  width: 32px;
+  height: 32px;
+  transition: all 0.2s ease;
+  filter: brightness(0) saturate(100%) invert(60%) sepia(0%) saturate(0%)
+    hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+
+.mobileNav button:hover img,
+.mobileNav button.active img {
+  filter: brightness(0) saturate(100%) invert(12%) sepia(94%) saturate(6500%)
+    hue-rotate(270deg) brightness(95%) contrast(105%);
+}
+
 /* Responsive Design */
 @media (max-width: 1200px) {
   .sidebar {
     width: 400px;
     padding: 1.5rem 1rem;
   }
-  
+
   .mainContent {
     padding: 1.5rem;
   }
-  
+
   .tableHeader,
   .tableRow {
     grid-template-columns: 1fr 0.5fr 1fr 1.5fr 1fr 0.8fr;
@@ -445,14 +499,14 @@
     gap: 1rem;
     padding: 1rem;
   }
-  
+
   /* Üst kısım - Navigation, Balance ve Currency yan yana */
   .topSection {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
   }
-  
+
   .sidebar {
     width: 100%;
     order: 1;
@@ -466,7 +520,7 @@
     gap: 2rem;
     align-items: flex-start;
   }
-  
+
   /* Navigation ve Balance sol tarafta */
   .leftSidebarContent {
     display: flex;
@@ -475,20 +529,20 @@
     flex: 1;
     margin-top: 20px;
   }
-  
+
   /* Currency sağ tarafta */
   .currencySection {
     flex: 1;
     margin-top: 0;
     height: auto;
   }
-  
+
   .mainContent {
     order: 2;
     padding: 0;
     flex: 1;
   }
-  
+
   .transactionsContainer {
     padding: 1.5rem;
     background: rgba(255, 255, 255, 0.05);
@@ -496,14 +550,14 @@
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
-  
+
   .tableHeader,
   .tableRow {
     grid-template-columns: 1fr 0.5fr 1fr 1.5fr 1fr 0.8fr;
     gap: 0.75rem;
     font-size: 0.85rem;
   }
-  
+
   .balanceSection {
     margin-bottom: 0;
     padding: 1rem;
@@ -511,53 +565,53 @@
     border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
-  
+
   .balanceTitle {
     font-size: 0.75rem;
     margin-bottom: 0.5rem;
   }
-  
+
   .balanceAmount {
     font-size: 2rem;
   }
-  
+
   .currencyTable {
     margin-bottom: 0.75rem;
   }
-  
+
   .currencyHeader {
     font-size: 0.75rem;
     padding: 0.75rem;
   }
-  
+
   .currencyRow {
     font-size: 0.8rem;
     padding: 0.75rem;
   }
-  
+
   .graphContainer {
     height: 200px;
   }
-  
+
   /* Action butonları için tablet optimizasyonu */
   .actions {
     gap: 0.25rem;
   }
-  
+
   .editButton {
     padding: 0.25rem;
   }
-  
+
   .editIcon {
     width: 14px;
     height: 14px;
   }
-  
+
   .deleteButton {
     padding: 0.4rem 0.8rem;
     font-size: 0.7rem;
   }
-  
+
   /* FAB için tablet optimizasyonu */
   .fab {
     bottom: 1.5rem;
@@ -565,11 +619,11 @@
     width: 48px;
     height: 48px;
   }
-  
+
   .fabIcon {
     font-size: 24px;
   }
-  
+
   .ellipse14 {
     position: absolute;
     top: -200px;
@@ -578,7 +632,7 @@
     height: 1545px;
     z-index: 0;
   }
-  
+
   .ellipse16 {
       position: absolute;
       bottom: -300px;
@@ -587,7 +641,7 @@
       height: 1701px;
       z-index: 0;
   }
-  
+
   .ellipse18 {
       position: absolute;
       top: 1000px;
@@ -597,14 +651,14 @@
       height: 933px;
       z-index: 0;
   }
-  
+
   .ellipse19 {
       position: absolute;
       right: 400px;
       width: 100vw;
       height: 100vh;
       z-index: 0;
-    
+
   }
   .ellipse20 {
       position: absolute;
@@ -614,7 +668,7 @@
       width: 100vw;
       height: 500px;
       z-index: 0;
-    
+
   }
 }
 
@@ -625,14 +679,14 @@
     padding: 0.5rem;
     gap: 1rem;
   }
-  
+
   /* Üst kısım - Navigation yan yana */
   .topSection {
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .sidebar {
     width: 100%;
     order: 1;
@@ -645,22 +699,22 @@
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .leftSidebarContent {
     width: 100%;
     margin-top: 0;
   }
-  
+
   .currencySection {
     display: none; /* Mobilde currency gizle */
   }
-  
+
   .mainContent {
     order: 2;
     padding: 0;
     flex: 1;
   }
-  
+
   .transactionsContainer {
     padding: 0;
     background: transparent;
@@ -668,14 +722,14 @@
     border-radius: 0;
     border: none;
   }
-  
+
   /* Tablo yerine card layout */
   .transactionsTable {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
   }
-  
+
   .tableHeader {
     display: none; /* Mobilde header gizle */
   }
@@ -688,7 +742,7 @@
   .tableRow > div:not(.mobileCard) {
     display: none;
   }
-  
+
   /* Mobile Card Layout - resimdeki gibi */
   .mobileCard {
     display: flex;
@@ -698,10 +752,15 @@
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 1rem;
+  }
+
+  .tableHeader,
+  .tableRow {
+    grid-template-columns: 1fr 0.5fr 1fr 1fr;
     gap: 0.5rem;
     position: relative;
   }
-  
+
   /* Card içindeki her satır - sol label, sağ değer */
   .transactionCardRow {
     display: flex;
@@ -710,7 +769,7 @@
     padding: 0.25rem 0;
     min-height: 24px;
   }
-  
+
   .transactionCardLabel {
     font-size: 0.75rem;
     font-weight: 600;
@@ -720,7 +779,7 @@
     flex: 1;
     text-align: left;
   }
-  
+
   .transactionCardValue {
     font-size: 0.875rem;
     color: white;
@@ -728,35 +787,35 @@
     text-align: right;
     flex: 1;
   }
-  
+
   /* Type styling */
   .transactionCardValue.type {
     font-weight: 600;
     font-size: 1.25rem;
   }
-  
+
   .transactionCardValue.income {
     color: #10b981;
   }
-  
+
   .transactionCardValue.expense {
     color: #ef4444;
   }
-  
+
   /* Sum styling */
   .transactionCardValue.sum {
     font-weight: 600;
     font-size: 1rem;
   }
-  
+
   .transactionCardValue.sum.positive {
     color: #fbbf24;
   }
-  
+
   .transactionCardValue.sum.negative {
     color: #ef4444;
   }
-  
+
   /* Mobile Actions - card alt kısmında, Delete sol, Edit sağ */
   .mobileActions {
     display: flex;
@@ -766,7 +825,7 @@
     padding-top: 0.75rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
-  
+
   .mobileEditButton {
     background: none;
     border: none;
@@ -781,17 +840,20 @@
     order: 2; /* Edit sağ tarafta */
     font-size: 0.875rem;
   }
-  
+
+  .comment,
+  .actions {
+
   .mobileEditButton:hover {
     background: rgba(255, 255, 255, 0.1);
     color: white;
   }
-  
+
   .mobileEditButton .editIcon {
     width: 16px;
     height: 16px;
   }
-  
+
   .mobileDeleteButton {
     background: linear-gradient(45deg, #e9d30a, #cf2711, #d311c9, #581c87);
     background-size: 200% 200%;
@@ -811,7 +873,7 @@
     animation: gradientShift 3s ease infinite;
     order: 1; /* Delete sol tarafta */
   }
-  
+
   .mobileDeleteButton::before {
     content: '';
     position: absolute;
@@ -822,22 +884,22 @@
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
     transition: left 0.8s ease;
   }
-  
+
   .mobileDeleteButton:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(217, 119, 6, 0.4);
     animation: gradientShift 1.5s ease infinite;
   }
-  
+
   .mobileDeleteButton:hover::before {
     left: 100%;
   }
-  
+
   .mobileDeleteButton:active {
     transform: translateY(0);
     box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
   }
-  
+
   /* FAB için mobil optimizasyonu */
   .fab {
     bottom: 1rem;
@@ -845,11 +907,11 @@
     width: 56px;
     height: 56px;
   }
-  
+
   .fabIcon {
     font-size: 28px;
   }
-  
+
   /* Background ellipses için mobil optimizasyonu */
   .ellipse14 {
     position: absolute;
@@ -859,7 +921,7 @@
     height: 1545px;
     z-index: 0;
   }
-  
+
   .ellipse16 {
       position: absolute;
       bottom: -300px;
@@ -868,7 +930,7 @@
       height: 1701px;
       z-index: 0;
   }
-  
+
   .ellipse18 {
       position: absolute;
       top: 1000px;
@@ -878,14 +940,14 @@
       height: 933px;
       z-index: 0;
   }
-  
+
   .ellipse19 {
       position: absolute;
       right: 400px;
       width: 100vw;
       height: 100vh;
       z-index: 0;
-    
+
   }
   .ellipse20 {
       position: absolute;
@@ -895,7 +957,7 @@
       width: 100vw;
       height: 500px;
       z-index: 0;
-    
+
   }
 }
 
@@ -903,6 +965,16 @@
 @media (min-width: 768px) {
   .mobileCard {
     display: none;
+  }
+
+  .mobileNav {
+    display: flex;
+  }
+}
+
+@media (max-width: 320px) {
+  .mobileNav {
+    flex-direction: column;
   }
 }
 

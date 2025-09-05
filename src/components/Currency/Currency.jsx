@@ -51,7 +51,13 @@ const Currency = () => {
         currency: "USD",
         showLabel: true,
       },
-      { x: 70, y: baseValues.EUR, label: "", currency: "EUR", showLabel: false },
+      {
+        x: 70,
+        y: baseValues.EUR,
+        label: "",
+        currency: "EUR",
+        showLabel: false,
+      },
       {
         x: 95,
         y: eurValue,
@@ -177,7 +183,7 @@ const Currency = () => {
             <path
               d={smoothPathD(pts)}
               stroke="url(#lineGradient)"
-              strokeWidth="2.5"
+              strokeWidth="1.5"
               fill="none"
               strokeLinecap="round"
               strokeLinejoin="round"
