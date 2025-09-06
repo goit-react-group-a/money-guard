@@ -7,7 +7,7 @@ import {
   selectCurrencyError,
 } from "../../redux/monobank/selectors";
 import styles from "./Currency.module.css";
-
+import statsStyles from '../../pages/StatisticsPage/StatisticsPage.module.css';
 const Currency = () => {
   const dispatch = useDispatch();
   const currencies = useSelector(selectCurrencies) || [];
@@ -25,10 +25,10 @@ const Currency = () => {
   const VIEW_W = 431;
   const VIEW_H = 281;
   const CHART_H = 200; // dikey çizim alanı
-  const TOP_PAD = 28;  // etiketler için üst boşluk
+  const TOP_PAD = 28; // etiketler için üst boşluk
   const X_FACTOR = 4.31;
 
-  // Güncel kurlar (boşsa fallBack)
+  // Güncel kurlar (boşsa fallback)
   const getValues = () => {
     const find = (code) => {
       const currency = currencies.find((c) => c.currency === code);
@@ -54,7 +54,13 @@ const Currency = () => {
         currency: "USD",
         showLabel: true,
       },
-      { x: 70, y: baseValues.EUR, label: "", currency: "EUR", showLabel: false },
+      {
+        x: 70,
+        y: baseValues.EUR,
+        label: "",
+        currency: "EUR",
+        showLabel: false,
+      },
       {
         x: 95,
         y: eurValue,
@@ -116,7 +122,7 @@ const Currency = () => {
 
   if (loading) {
     return (
-      <div className={styles.currencySection}>
+      <div className={`${styles.currencySection} ${statsStyles.statisticsBox}`}>
         <div className={styles.loading}>Yükleniyor...</div>
       </div>
     );
@@ -124,14 +130,14 @@ const Currency = () => {
 
   if (error) {
     return (
-      <div className={styles.currencySection}>
+      <div className={`${styles.currencySection} ${statsStyles.statisticsBox}`}>
         <div className={styles.error}>{error}</div>
       </div>
     );
   }
 
   return (
-    <div className={styles.currencySection}>
+    <div className={`${styles.currencySection} ${statsStyles.statisticsBox}`}>
       {/* Tablo */}
       <div className={styles.currencyTable}>
         <div className={styles.currencyHeader}>
@@ -140,7 +146,9 @@ const Currency = () => {
           <span className={styles.hCol}>Sale</span>
         </div>
 
+
         {displayCurrencies.map((c, i) => {
+
           const purchase = Number(c.purchase ?? 0);
           const sale = Number(c.sale ?? 0);
           return (
@@ -188,14 +196,14 @@ const Currency = () => {
             <path
               d={smoothPathD(pts)}
               stroke="url(#lineGradient)"
-              strokeWidth="2.5"
+              strokeWidth="1.5"
               fill="none"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
           )}
 
-          {/* Noktalar & etiketler (akıllı hizalama) */}
+          {/* Noktalar & etiketler */}
           {pts.map((point, i) => {
             const cx = xScale(point.x);
             const cy = yScale(point.y);

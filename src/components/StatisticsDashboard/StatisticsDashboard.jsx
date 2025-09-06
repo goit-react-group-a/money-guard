@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   selectTransactions,
@@ -17,22 +17,25 @@ const StatisticsDashboard = () => {
 
   const [selectedMonth, setSelectedMonth] = useState("September");
   const [selectedYear, setSelectedYear] = useState("2025");
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const years = ["2020", "2021", "2022", "2023", "2024", "2025"];
+  // Window resize listener
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const months = useMemo(
+    () => [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ],
+    []
+  );
+
+  const years = useMemo(() => ["2020", "2021", "2022", "2023", "2024", "2025"], []);
+
 
   // Convert arrays to options format for FloatingDropdown
   const monthOptions = months.map(month => ({
@@ -45,36 +48,27 @@ const StatisticsDashboard = () => {
     label: year
   }));
 
-  // Kategori ID'lerini kategori adlarına eşle
+
   const getCategoryName = (categoryId) => {
     if (!categories || !categoryId) return "Unknown";
     const category = categories.find((cat) => cat.id === categoryId);
     return category ? category.name : "Unknown";
   };
 
-  // Seçilen ay ve yıra göre transaction'ları filtrele
+
   const filteredTransactions = useMemo(() => {
     if (!transactions || transactions.length === 0) return [];
-
     const monthIndex = months.indexOf(selectedMonth);
     const year = parseInt(selectedYear);
-
     return transactions.filter((transaction) => {
       const transactionDate = new Date(transaction.transactionDate);
-      const transactionMonth = transactionDate.getMonth();
-      const transactionYear = transactionDate.getFullYear();
-
-      return transactionMonth === monthIndex && transactionYear === year;
+      return transactionDate.getMonth() === monthIndex &&
+             transactionDate.getFullYear() === year;
     });
   }, [transactions, selectedMonth, selectedYear, months]);
 
-  // Sadece EXPENSE transaction'ları filtrele
   const expenseTransactions = useMemo(() => {
-    if (!filteredTransactions || filteredTransactions.length === 0) return [];
-
-    return filteredTransactions.filter(
-      (transaction) => transaction.type === "EXPENSE"
-    );
+    return filteredTransactions.filter(tx => tx.type === "EXPENSE");
   }, [filteredTransactions]);
 
   const statistics = useMemo(() => {
@@ -84,90 +78,42 @@ const StatisticsDashboard = () => {
         totalExpense: 0,
         balance: 0,
         categoryExpenses: {},
-        chartData: {
-          labels: [],
-          datasets: [
-            {
-              data: [],
-              backgroundColor: [],
-              borderColor: [],
-              borderWidth: 2,
-              hoverOffset: 4,
-            },
-          ],
-        },
+        chartData: { labels: [], datasets: [{ data: [], backgroundColor: [], borderColor: [], borderWidth: 2, hoverOffset: 4 }] }
       };
     }
 
-    // Kategori ID'lerini kategori adlarına eşle
     const categoryMap = {};
-    if (categories) {
-      categories.forEach((category) => {
-        categoryMap[category.id] = category.name;
-      });
-    }
+    categories?.forEach(cat => categoryMap[cat.id] = cat.name);
 
     let totalIncome = 0;
     let totalExpense = 0;
     const categoryExpenses = {};
 
-    // Sadece EXPENSE transaction'ları işle
-    filteredTransactions.forEach((transaction) => {
-      if (transaction.type === "INCOME") {
-        totalIncome += Math.abs(transaction.amount);
-      } else if (transaction.type === "EXPENSE") {
-        totalExpense += Math.abs(transaction.amount);
-
-        // Kategori adını bul
-        const categoryName =
-          categoryMap[transaction.categoryId] || "Other expenses";
-        if (!categoryExpenses[categoryName]) {
-          categoryExpenses[categoryName] = 0;
-        }
-        categoryExpenses[categoryName] += Math.abs(transaction.amount);
+    filteredTransactions.forEach(tx => {
+      if (tx.type === "INCOME") totalIncome += Math.abs(tx.amount);
+      else if (tx.type === "EXPENSE") {
+        totalExpense += Math.abs(tx.amount);
+        const categoryName = categoryMap[tx.categoryId] || "Other expenses";
+        categoryExpenses[categoryName] = (categoryExpenses[categoryName] || 0) + Math.abs(tx.amount);
       }
     });
 
     const balance = totalIncome - totalExpense;
-
-    // Chart için sadece expense verilerini hazırla - her kategori için farklı renk
     const labels = Object.keys(categoryExpenses);
     const data = Object.values(categoryExpenses);
-
-    // Her kategori için farklı renk kullan
-    const colors = [
-      "#FF6384", // Pembe
-      "#36A2EB", // Mavi
-      "#FFCE56", // Sarı
-      "#4BC0C0", // Turkuaz
-      "#9966FF", // Mor
-      "#FF9F40", // Turuncu
-      "#FF6384", // Pembe
-      "#C9CBCF", // Gri
-    ];
-
+    const colors = ["#FF6384","#36A2EB","#FFCE56","#4BC0C0","#9966FF","#FF9F40","#FF6384","#C9CBCF"];
     const chartData = {
       labels,
-      datasets: [
-        {
-          data,
-          backgroundColor: colors.slice(0, labels.length),
-          borderColor: colors
-            .slice(0, labels.length)
-            .map((color) => color + "80"),
-          borderWidth: 2,
-          hoverOffset: 4,
-        },
-      ],
+      datasets: [{
+        data,
+        backgroundColor: colors.slice(0, labels.length),
+        borderColor: colors.slice(0, labels.length).map(c => c + "80"),
+        borderWidth: 2,
+        hoverOffset: 4
+      }]
     };
 
-    return {
-      totalIncome,
-      totalExpense,
-      balance,
-      categoryExpenses,
-      chartData,
-    };
+    return { totalIncome, totalExpense, balance, categoryExpenses, chartData };
   }, [filteredTransactions, categories]);
 
   const chartOptions = {
@@ -177,23 +123,24 @@ const StatisticsDashboard = () => {
       legend: { display: false },
       tooltip: {
         callbacks: {
-          label: function (context) {
+          label: (context) => {
             const label = context.label || "";
             const value = context.parsed;
-            const total = context.dataset.data.reduce((a, b) => a + b, 0);
-            const percentage = ((value / total) * 100).toFixed(1);
-            return `${label}: €${value.toLocaleString(
-              "en-IN"
-            )} (${percentage}%)`;
-          },
-        },
-      },
+
+            const total = context.dataset.data.reduce((a,b)=>a+b,0);
+            const percentage = ((value/total)*100).toFixed(1);
+            return `${label}: ₹${value.toLocaleString("en-IN")} (${percentage}%)`;
+          }
+        }
+      }
+
     },
     cutout: "60%",
   };
 
   return (
     <div className={styles.statisticsDashboard}>
+
       {/* Desktop Layout */}
       <div className={styles.desktopLayout}>
         {/* Main Content - Chart (Sol) ve Expense Details (Sağ) */}
@@ -327,6 +274,7 @@ const StatisticsDashboard = () => {
           </div>
         </div>
 
+
         {/* Mobile Filters Section */}
         <div className={styles.mobileFiltersSection}>
           <div className={styles.mobileFilters}>
@@ -345,8 +293,10 @@ const StatisticsDashboard = () => {
               placeholder="Select year"
               className={styles.mobileStatisticsTrigger}
             />
+
           </div>
         </div>
+
 
         {/* Mobile Transaction Details */}
         <div className={styles.mobileTransactionDetails}>
@@ -373,12 +323,14 @@ const StatisticsDashboard = () => {
                       €{amount.toLocaleString("en-IN", {
                         minimumFractionDigits: 2,
                       })}
+
                     </span>
                   </div>
                 );
               })}
             </div>
           ) : (
+
             <div className={styles.mobileNoTransactions}>
               <p>
                 No expenses found for {selectedMonth} {selectedYear}
@@ -405,6 +357,7 @@ const StatisticsDashboard = () => {
                   minimumFractionDigits: 2,
                 })}
               </span>
+
             </div>
           </div>
         </div>

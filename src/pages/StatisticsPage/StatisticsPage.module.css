@@ -117,14 +117,14 @@
 
 .currencyHeader {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   padding: 1rem;
   background: rgba(255, 255, 255, 0.08);
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #a0a0a0;
+  color: #1b1414;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -242,6 +242,7 @@
   margin: 0;
 }
 
+
 /* Tablet Layout - Hidden by default */
 .tabletContainer {
   display: none;
@@ -281,6 +282,14 @@
 
 /* Tablet Responsive Design */
 @media (max-width: 1024px) and (min-width: 768px) {
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  
+  .balanceSection {
+  display:none;
+}
+
   .mainContainer {
     display: none;
   }
@@ -299,6 +308,7 @@
 
   .sidebar {
     width: 100%;
+
     order: 1;
     padding: 1rem;
     background: rgba(255, 255, 255, 0.05);
@@ -323,6 +333,12 @@
     flex: 1;
     margin-top: 0;
     height: auto;
+
+    border-right: none;
+    border-bottom: 0 solid rgba(255, 255, 255, 0);
+    padding: 1rem;
+    background: none;
+
   }
 
   .mainContent {
@@ -342,6 +358,7 @@
   .balanceSection {
     margin-bottom: 0;
     padding: 1rem;
+
     background: rgba(255, 255, 255, 0.08);
     border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -350,11 +367,12 @@
   .balanceTitle {
     font-size: 0.75rem;
     margin-bottom: 0.5rem;
+
+    padding: 0;
+
   }
 
-  .balanceAmount {
-    font-size: 2rem;
-  }
+  
 
   /* DashboardPage'den Currency CSS'leri */
   .currencyTable {
@@ -452,7 +470,9 @@
 
   .balanceAmount {
     font-size: 1.5rem;
+
   }
+
 
   .pageTitle {
     font-size: 1.5rem;
@@ -467,4 +487,60 @@
     height: 1500px;
     z-index: 0;
   }
+
+
+  
+
+}
+
+@media (max-width: 1024px) { 
+  .sidebar {
+    background: none;
+    border: none;
+  }
+
+  .currencySection {
+  margin-top: 60px;
+  height: 430px;
+  display: flex;
+  flex-direction: column;
+}
+
+.currencyTable {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.currencyHeader {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #1b1414;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.currencyRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.875rem;
+  color: white;
+  background: none;
+}
+
+.currencyRow:last-child {
+  border-bottom: none;
+}
+
+
 }

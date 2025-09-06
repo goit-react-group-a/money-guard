@@ -13,19 +13,20 @@ const Navigation = () => {
     {
       path: '/home',
       label: 'Home',
-      icon: homeIcon
+      icon: homeIcon,
     },
     {
       path: '/statistics',
       label: 'Statistics',
-      icon: statisticIcon
+      icon: statisticIcon,
     },
     {
       path: '/currency',
       label: 'Currency',
       icon: currencyIcon,
-      mobileOnly: true
-    }
+      hoverIcon: currencyHoverIcon, // ✅ Hover ikonu eklendi
+      mobileOnly: true, // ✅ Sadece mobilde gösterilecek
+    },
   ];
 
   return (
@@ -34,17 +35,23 @@ const Navigation = () => {
         <NavLink
           key={item.path}
           to={item.path}
-          className={({ isActive }) => 
-            `${styles.navItem} ${isActive ? styles.active : ''} ${item.mobileOnly ? styles.mobileOnly : ''}`
+          className={({ isActive }) =>
+            `${styles.navItem} ${isActive ? styles.active : ''} ${
+              item.mobileOnly ? styles.mobileOnly : ''
+            }`
           }
           onMouseEnter={() => setHoveredItem(item.path)}
           onMouseLeave={() => setHoveredItem(null)}
         >
           <div className={styles.iconContainer}>
-            <img 
-              src={hoveredItem === item.path && item.hoverIcon ? item.hoverIcon : item.icon} 
-              alt={item.label} 
-              className={styles.navIcon} 
+            <img
+              src={
+                hoveredItem === item.path && item.hoverIcon
+                  ? item.hoverIcon
+                  : item.icon
+              }
+              alt={item.label}
+              className={styles.navIcon}
             />
           </div>
           <span className={styles.navLabel}>{item.label}</span>
@@ -55,4 +62,3 @@ const Navigation = () => {
 };
 
 export default Navigation;
-
