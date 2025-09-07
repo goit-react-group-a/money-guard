@@ -1,12 +1,68 @@
-# React + Vite
+# 💰 Money Guard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![LiveDemo](https://img.shields.io/badge/Live%20Demo-Online-green?style=flat&logo=vercel)](https://money-guard-z41y.vercel.app/login)\
+[![GitHub](https://img.shields.io/badge/Repo-GitHub-blue?style=flat&logo=github)](https://github.com/goit-react-group-a/money-guard)
 
-Currently, two official plugins are available:
+**Money Guard**, kişisel finanslarını kolayca yönetmeni sağlayan modern
+ve kullanıcı dostu bir uygulamadır. Gelirlerini ve giderlerini takip et,
+kategorilere ayır, grafiklerle analiz et ve bütçeni daha iyi planla! 📊
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Money Guard Dashboard](./public/screenshots/dashboard.png)
 
-## Expanding the ESLint configuration
+------------------------------------------------------------------------
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## ✨ Özellikler
+
+-   💸 **Gelir & Gider Takibi** -- Tüm işlemlerini kolayca kaydet\
+-   📊 **Dinamik Grafikler** -- Kategori bazlı harcama analizi\
+-   🔍 **Filtreleme & Arama** -- Tarihe, kategoriye göre işlemleri
+    görüntüle\
+-   📱 **Responsive Tasarım** -- Mobil, tablet ve masaüstü uyumlu\
+-   🌍 **Çoklu Para Birimi** -- Monobank API üzerinden güncel kurlarla
+    işlem yap\
+-   🎨 **Modern UI** -- Blur efektleri ve şık arayüz
+
+------------------------------------------------------------------------
+
+## 🚀 Canlı Uygulama
+
+👉 [Projeyi Görüntüle](https://money-guard-z41y.vercel.app/login)
+
+------------------------------------------------------------------------
+
+## 🖼️ Ekran Görüntüleri
+
+### 🏠 Dashboard
+
+![Dashboard](./public/screenshots/dashboard.png)
+
+### 📑 Transactions
+
+![Transactions](./public/screenshots/transactions.png)
+
+### 📈 Statistics
+
+![Statistics](./public/screenshots/statistics.png)
+
+------------------------------------------------------------------------
+
+## 🛠️ Kullanılan Teknolojiler
+
+-   **React**, **Redux Toolkit**, **React Router**\
+-   **Monobank API** (döviz kurları ve banka entegrasyonu)\
+-   **CSS Modules**\
+-   **Chart.js / Recharts** (grafikler için)\
+-   **Vercel** (deployment)
+
+------------------------------------------------------------------------
+
+## 🙋‍♂️ Katkı Sağla
+
+1.  Forkla 🍴\
+2.  Yeni bir branch oluştur (`git checkout -b feature/yenilik`)\
+3.  Değişiklik yap & commit et\
+4.  Branch'i pushla (`git push origin feature/yenilik`)\
+5.  Pull request oluştur
+
+------------------------------------------------------------------------
+> 💡 Money Guard ile finansal özgürlüğünü planla! 🚀
