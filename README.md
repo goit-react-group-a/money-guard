@@ -7,7 +7,7 @@
 ve kullanıcı dostu bir uygulamadır. Gelirlerini ve giderlerini takip et,
 kategorilere ayır, grafiklerle analiz et ve bütçeni daha iyi planla! 📊
 
-![Money Guard Dashboard](./public/screenshots/dashboard.png)
+![Money Guard Dashboard](./src/screenshots/dashboard.png)
 
 ------------------------------------------------------------------------
 
@@ -34,15 +34,15 @@ kategorilere ayır, grafiklerle analiz et ve bütçeni daha iyi planla! 📊
 
 ### 🏠 Dashboard
 
-![Dashboard](./public/screenshots/dashboard.png)
+![Dashboard](./src/screenshots/dashboard.png)
 
 ### 📑 Transactions
 
-![Transactions](./public/screenshots/transactions.png)
+![Transactions](./src/screenshots/transactions.png)
 
 ### 📈 Statistics
 
-![Statistics](./public/screenshots/statistics.png)
+![Statistics](./src/screenshots/statistics.png)
 
 ------------------------------------------------------------------------
 
